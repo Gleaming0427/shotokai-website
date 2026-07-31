@@ -1,67 +1,43 @@
-# Site du Karaté Shotokai Lacroix-Falgarde
+# Astro Starter Kit: Minimal
 
-Site vitrine du club, construit avec [Astro](https://astro.build) et déployé sur Netlify. Le contenu (articles techniques, événements) est éditable via une interface d'administration sans toucher au code.
-
-## Stack technique
-
-- **[Astro](https://astro.build)** — génère un site 100% statique (`output: 'static'`), pas de serveur applicatif.
-- **[Decap CMS](https://decapcms.org/)** (ex-Netlify CMS) — interface d'admin accessible sur `/admin`, qui écrit directement des fichiers Markdown dans le repo Git via commits automatiques.
-- **Netlify** — hébergement, build (`npm run build`) et authentification de l'admin (Netlify Identity + Git Gateway).
-
-## Structure du projet
-
-```
-public/
-  admin/
-    index.html      # charge Decap CMS (via unpkg)
-    config.yml       # config CMS utilisée en prod (backend: git-gateway)
-  config.txt          # config CMS alternative (backend GitHub OAuth), non utilisée par défaut
-  images/              # assets statiques (logos, photos...)
-
-src/
-  components/          # sections de la page d'accueil (Hero, APropos, Karate, Iaijutsu, Horaires, Evenements, Contact, Header, Footer)
-  content/
-    techniques/         # articles techniques du dojo (Markdown)
-    evenements/          # événements du club (Markdown)
-  content.config.ts     # schémas de validation des collections (title, date, image, tag...)
-  pages/
-    index.astro          # page d'accueil, assemble les composants
-    techniques.astro      # liste des articles techniques
-    techniques/[slug].astro # page de détail d'un article technique
-  styles/global.css      # styles globaux
+```sh
+npm create astro@latest -- --template minimal
 ```
 
-## Comment fonctionne le contenu
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-Les articles techniques et les événements sont des fichiers Markdown dans `src/content/`, avec un frontmatter défini par `src/content.config.ts` :
+## 🚀 Project Structure
 
-- **techniques** : `title`, `date`, `image` (optionnelle)
-- **evenements** : `title`, `tag`, `date`, `image` (optionnelle)
+Inside of your Astro project, you'll see the following folders and files:
 
-Ces fichiers ne sont normalement **pas édités à la main** : le club les gère via l'interface `/admin` (Decap CMS), qui pousse un commit à chaque création/modification/suppression. Astro régénère ensuite le site au prochain build.
-
-## Développement local
-
-```bash
-npm install
-npm run dev
+```text
+/
+├── public/
+├── src/
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-Le site est servi sur `http://localhost:4321`.
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-Autres commandes utiles :
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-| Commande          | Action                                      |
-| ----------------- | -------------------------------------------- |
-| `npm run build`   | Build de production dans `./dist/`           |
-| `npm run preview` | Prévisualise le build de production en local |
-| `npm run astro`   | Accès direct à la CLI Astro                  |
+Any static assets, like images, can be placed in the `public/` directory.
 
-## Déploiement
+## 🧞 Commands
 
-Le déploiement est géré par Netlify (`netlify.toml`) : chaque push sur `main` déclenche `npm run build` et publie `dist/`. Un `sitemap.xml` est généré automatiquement (`@astrojs/sitemap`).
+All commands are run from the root of the project, from a terminal:
 
-## Documentation
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-- [Documentation Astro](https://docs.astro.build)
-- [Documentation Decap CMS](https://decapcms.org/docs/intro/)
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -1,0 +1,64 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('techniques');
+  return articles.map(article => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { title, date, image } = article.data;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title} — Techniques — Karaté Shotokaï & Iaijutsu</title>
+    <meta name="description" content={article.body.substring(0, 160)} />
+    <link rel="canonical" href={`/techniques/${article.id}/`} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content={`${title} — Techniques`} />
+    <meta property="og:description" content={article.body.substring(0, 160)} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={`/techniques/${article.id}/`} />
+    <meta property="og:locale" content="fr_FR" />
+    {image && <meta property="og:image" content={image} />}
+  </head>
+
+  <body class="page-inner">
+    <a href="#main" class="skip-link">Aller au contenu</a>
+    <Header />
+    <main id="main">
+      <article class="section" style="padding-top: 6rem;">
+        <div class="container">
+          <p style="text-align:center;margin-bottom:1rem;">
+            <a href="/techniques/" style="color:var(--color-text-soft);font-size:.9rem;">&larr; Retour aux techniques</a>
+          </p>
+          <h1 class="section-title" style="text-transform:none;letter-spacing:.04em;">{title}</h1>
+          <time class="article-date" datetime={date.toISOString().split('T')[0]}>
+            {date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </time>
+          {image && <img src={image} alt={title} class="article-hero" />}
+          <div class="prose article-body" set:html={marked.parse(article.body || '')} />
+        </div>
+      </article>
+    </main>
+    <Footer />
+    <Fragment set:html={`<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"><\/script><script>window.netlifyIdentity&&window.netlifyIdentity.on("init",function(u){u||window.netlifyIdentity.on("login",function(){document.location.href="/admin/";})}),window.netlifyIdentity.init();<\/script>`} />
+  </body>
+</html>

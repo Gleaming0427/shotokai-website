@@ -4,8 +4,39 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Administration</title>
+  <style>
+    /* Limite la taille des images dans l'éditeur */
+    [class*="editor"] img,
+    [class*="Editor"] img,
+    [class*="DraftEditor"] img,
+    [class*="rich-text"] img,
+    .cms-editor img,
+    [data-slate-editor] img { max-width: 500px !important; max-height: 350px !important; height: auto !important; object-fit: contain !important; cursor: zoom-in; }
+  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@3.6.1/dist/decap-cms.js"></script>
+  <script>
+    // Enregistre un composant image avec largeur réglable
+    CMS.registerEditorComponent({
+      id: 'resizable-image',
+      label: 'Image (redimensionnable)',
+      fields: [
+        { name: 'src', label: 'Image', widget: 'image' },
+        { name: 'alt', label: 'Texte alternatif', widget: 'string' },
+        { name: 'width', label: 'Largeur (pixels)', widget: 'number', default: 600, min: 100, max: 1200 }
+      ],
+      pattern: /^<img src="(.*?)" alt="(.*?)" width="(\d+)"\s?\/?>$/,
+      fromBlock: function(match) {
+        return { src: match[1], alt: match[2] || '', width: parseInt(match[3]) || 600 };
+      },
+      toBlock: function(obj) {
+        return '<img src="' + obj.src + '" alt="' + (obj.alt || '') + '" width="' + (obj.width || 600) + '" />';
+      },
+      toPreview: function(obj) {
+        return '<img src="' + obj.src + '" alt="' + (obj.alt || '') + '" style="max-width:100%;width:' + (obj.width || 600) + 'px;border-radius:8px;" />';
+      }
+    });
+  </script>
 </body>
 </html>

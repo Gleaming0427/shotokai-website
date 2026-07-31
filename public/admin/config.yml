@@ -5,6 +5,9 @@ backend:
 media_folder: "public/images/articles"
 public_folder: "/images/articles"
 
+editor:
+  preview: false
+
 collections:
   - name: "techniques"
     label: "Techniques"
@@ -12,11 +15,30 @@ collections:
     folder: "src/content/techniques"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
     fields:
       - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Date", name: "date", widget: "datetime", default: "{{now}}" }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Contenu", name: "body", widget: "markdown" }
+      - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - label: "Contenu"
+        name: "body"
+        widget: "markdown"
+        default: "Écrivez votre article ici..."
+        modes:
+          - rich_text
+          - raw
+        default_mode: rich_text
+        buttons:
+          - bold
+          - italic
+          - code
+          - link
+          - heading-two
+          - heading-three
+          - quote
+          - bulleted-list
+          - numbered-list
 
 slug:
   encoding: "ascii"
