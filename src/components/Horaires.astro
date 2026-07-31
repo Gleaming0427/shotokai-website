@@ -1,0 +1,80 @@
+---
+// Horaires.astro
+---
+
+<section class="section section-alt" id="horaires">
+  <div class="container">
+    <h2 class="section-title">Horaires &amp; Tarifs</h2>
+
+    <table class="schedule-table">
+      <thead>
+        <tr>
+          <th>Public</th>
+          <th>Jour &amp; Horaire</th>
+          <th>Activité</th>
+          <th>Tarif</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="day">Enfants</span><br/><small>(à partir de 7 ans)</small></td>
+          <td>Mercredi 18h30 – 19h30</td>
+          <td>Karaté</td>
+          <td class="price">30 € / trimestre</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><span class="day">Ados &amp; Adultes</span><br/><small>(à partir de 13 ans)</small></td>
+          <td>Mercredi 19h30 – 21h15</td>
+          <td>Karaté</td>
+          <td rowspan="2" class="price">60 € / trimestre</td>
+        </tr>
+        <tr>
+          <td>Samedi 15h – 16h30</td>
+          <td>Karaté</td>
+        </tr>
+        <tr>
+          <td><span class="day">Ados &amp; Adultes</span><br/><small>(à partir de 13 ans)</small></td>
+          <td>Samedi 14h – 15h</td>
+          <td>Iaijutsu</td>
+          <td class="price">60 € / trimestre</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="schedule-note">Les tarifs ne prennent pas en compte la cotisation à l'association KDSE ainsi que l'inscription à la FEKAMT.</p>
+
+    <div class="location-grid">
+      <div class="location-map" id="map-container">
+        <button class="map-load-btn" id="map-load-btn" aria-label="Charger la carte">
+          <span>&#128205;</span>
+          <span>Voir la carte</span>
+        </button>
+      </div>
+      <div class="location-info">
+        <h3>Dojo Lacroix-Falgarde</h3>
+        <p><strong>Avenue de Falgarde</strong><br/>31120 Lacroix-Falgarde</p>
+        <p style="margin-top: 0.5rem;">Près du centre commercial Verte Campagne, à côté des terrains de tennis.</p>
+        <div class="location-cta">
+          <a href="https://www.google.com/maps/dir/?api=1&destination=43.5042,1.4165" target="_blank" rel="noopener" class="btn">Y aller</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const mapBtn = document.getElementById('map-load-btn');
+  const mapContainer = document.getElementById('map-container');
+  mapBtn?.addEventListener('click', () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.openstreetmap.org/export/embed.html?bbox=1.4070%2C43.4990%2C1.4230%2C43.5090&layer=mapnik&marker=43.5042%2C1.4165';
+    iframe.title = 'Carte — Dojo de Lacroix-Falgarde';
+    iframe.width = '400';
+    iframe.height = '300';
+    iframe.style.border = 'none';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    mapContainer!.innerHTML = '';
+    mapContainer!.appendChild(iframe);
+  });
+</script>

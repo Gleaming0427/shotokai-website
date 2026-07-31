@@ -1,0 +1,124 @@
+---
+// index.astro — Single page du site Karaté Shotokaï Lacroix-Falgarde
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import APropos from '../components/APropos.astro';
+import Karate from '../components/Karate.astro';
+import Iaijutsu from '../components/Iaijutsu.astro';
+import Horaires from '../components/Horaires.astro';
+import Evenements from '../components/Evenements.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`/favicon.svg`} />
+    <link rel="icon" type="image/png" href={`/favicon.png`} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Preload image critique (LCP) -->
+    <link rel="preload" as="image" href={`/images/hero-bg.jpg`} fetchpriority="high" />
+
+    <!-- SEO -->
+    <title>Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde (31)</title>
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsClub",
+        "name": "Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde",
+        "description": "Club de Karaté-do Shotokaï et Iaijutsu à Lacroix-Falgarde. Pratique traditionnelle sans compétition, accessible à tous.",
+        "url": "https://gleaming0427.github.io/karate-shotokai-lacroix-website",
+        "telephone": "+33682665370",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Avenue de Falgarde",
+          "postalCode": "31120",
+          "addressLocality": "Lacroix-Falgarde",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "43.5042",
+          "longitude": "1.4165"
+        },
+        "openingHours": [
+          "Mer 18:30-21:15",
+          "Sam 14:00-16:30"
+        ],
+        "memberOf": [
+          {
+            "@type": "Organization",
+            "name": "Karaté-do Shotokaï Europe (KDSE)",
+            "url": "https://shotokaieurope.org"
+          },
+          {
+            "@type": "Organization",
+            "name": "FEKAMT",
+            "url": "https://fekamt.com"
+          }
+        ]
+      }
+    </script>
+    <meta name="description" content="Club de Karaté-do Shotokaï et Iaijutsu à Lacroix-Falgarde (31). Pratique traditionnelle sans compétition, accessible à tous. Cours enfants et adultes, horaires, tarifs." />
+    <link rel="canonical" href="https://gleaming0427.github.io/karate-shotokai-lacroix-website/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde" />
+    <meta property="og:description" content="Club de Karaté-do Shotokaï et Iaijutsu à Lacroix-Falgarde. Pratique traditionnelle sans compétition, accessible à tous." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gleaming0427.github.io/karate-shotokai-lacroix-website/" />
+    <meta property="og:image" content="https://gleaming0427.github.io/karate-shotokai-lacroix-website/images/hero-bg.jpg" />
+    <meta property="og:image:width" content="1152" />
+    <meta property="og:image:height" content="768" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde" />
+    <meta name="twitter:description" content="Club de Karaté-do Shotokaï et Iaijutsu. Pratique traditionnelle, pas de compétition." />
+    <meta name="twitter:image" content="https://gleaming0427.github.io/karate-shotokai-lacroix-website/images/hero-bg.jpg" />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Aller au contenu</a>
+    <Header />
+    <main id="main">
+      <Hero />
+      <APropos />
+      <Karate />
+      <Iaijutsu />
+      <Horaires />
+      <Evenements />
+      <Contact />
+    </main>
+    <Footer />
+    <Fragment set:html="<script src='https://identity.netlify.com/v1/netlify-identity-widget.js'><\/script><script>if(window.netlifyIdentity){window.netlifyIdentity.on('init',function(u){if(!u){window.netlifyIdentity.on('login',function(){document.location.href='/admin/';});}});window.netlifyIdentity.init();window.location.hash&&window.location.hash.includes('invite_token')&&window.netlifyIdentity.open('signup');}<\/script>" />
+    <script>
+      // Corrige le scroll vers l'ancre après chargement des images
+      if (window.location.hash) {
+        const id = window.location.hash.substring(1);
+        const scrollToAnchor = () => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.scrollIntoView({ behavior: 'instant', block: 'start' });
+            return true;
+          }
+          return false;
+        };
+        // Essaie plusieurs fois pour compenser le lazy loading
+        [100, 300, 600, 1000, 1500, 2500].forEach(ms => {
+          setTimeout(() => scrollToAnchor(), ms);
+        });
+      }
+    </script>
+  </body>
+</html>

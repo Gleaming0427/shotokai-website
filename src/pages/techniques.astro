@@ -1,0 +1,70 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('techniques');
+articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href={`/favicon.svg`} />
+    <link rel="icon" type="image/png" href={`/favicon.png`} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>Techniques — Karaté Shotokaï & Iaijutsu</title>
+    <meta name="description" content="Techniques de Karaté-do Shotokaï et Iaijutsu — Lacroix-Falgarde." />
+    <link rel="canonical" href={`/techniques/`} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Techniques — Karaté Shotokaï & Iaijutsu" />
+    <meta property="og:description" content="Techniques de Karaté-do Shotokaï et Iaijutsu." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={`/techniques/`} />
+    <meta property="og:locale" content="fr_FR" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Techniques — Karaté Shotokaï & Iaijutsu" />
+  </head>
+
+  <body class="page-inner">
+    <a href="#main" class="skip-link">Aller au contenu</a>
+    <Header />
+    <main id="main">
+      <section class="section" style="padding-top: 6rem;">
+        <div class="container">
+          <h1 class="section-title" style="text-transform: none; letter-spacing: 0.04em;">Techniques</h1>
+
+          {articles.length === 0 ? (
+            <p style="text-align: center; color: var(--color-text-soft);">À venir prochainement.</p>
+          ) : (
+            <div class="articles-grid">
+              {articles.map(article => (
+                <article class="article-card">
+                  {article.data.image && (
+                    <img src={article.data.image} alt={article.data.title} loading="lazy" />
+                  )}
+                  <div class="article-card-body">
+                    <time datetime={article.data.date.toISOString().split('T')[0]}>
+                      {article.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </time>
+                    <h2>{article.data.title}</h2>
+                    <p>{article.body.substring(0, 150)}...</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+    <Footer />
+    <Fragment set:html={`<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"><\/script><script>window.netlifyIdentity&&window.netlifyIdentity.on("init",function(u){u||window.netlifyIdentity.on("login",function(){document.location.href="/admin/";})}),window.netlifyIdentity.init();<\/script>`} />
+  </body>
+</html>

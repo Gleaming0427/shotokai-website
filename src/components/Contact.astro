@@ -1,0 +1,90 @@
+---
+// Contact.astro
+---
+
+<section class="section section-alt" id="contact">
+  <div class="container">
+    <h2 class="section-title">Contacts</h2>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="contact-text">
+            <strong>Téléphone</strong>
+            <a href="tel:+33682665370">06 82 66 53 70</a>
+            <br/><small style="color: var(--color-text-muted);">Sensei Denis Le Goff</small>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="contact-text">
+            <strong>Formulaire</strong>
+            Utilisez le formulaire ci-contre pour toute question. Nous vous répondrons dans les meilleurs délais.
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="contact-text">
+            <strong>Dojo Lacroix-Falgarde</strong>
+            Avenue de Falgarde<br/>31120 Lacroix-Falgarde
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contact-form" method="POST">
+        <input type="hidden" name="access_key" value="49ff0c07-693f-4d33-9b3b-2b110c393ea4" />
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+
+        <div class="form-fields" id="form-fields">
+          <label class="sr-only" for="nom">Nom</label>
+          <input type="text" name="nom" id="nom" placeholder="Nom" required />
+
+          <label class="sr-only" for="email">Adresse e-mail</label>
+          <input type="email" name="email" id="email" placeholder="Adresse e-mail" required />
+
+          <label class="sr-only" for="telephone">Téléphone</label>
+          <input type="tel" name="telephone" id="telephone" placeholder="Téléphone" />
+
+          <label class="sr-only" for="message">Message</label>
+          <textarea name="message" id="message" placeholder="Message" required></textarea>
+
+          <button type="submit" class="btn">Envoyer</button>
+        </div>
+
+        <div class="form-success" id="form-success">
+          &#10003; Message envoyé&nbsp;! Nous vous répondrons dans les meilleurs délais.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const fields = document.getElementById('form-fields')!;
+  const msg = document.getElementById('form-success')!;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      });
+      if (res.ok) {
+        fields.style.display = 'none';
+        msg.style.display = 'block';
+      }
+    } catch {
+      alert('Erreur d\'envoi. Veuillez réessayer.');
+    }
+  });
+</script>

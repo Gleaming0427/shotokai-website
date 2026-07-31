@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: Gleaming0427/karate-shotokai-lacroix-website
+  branch: main
+  base_url: https://decap-cms-backend-oauth.vercel.app
+
+media_folder: "public/images/articles"
+public_folder: "/images/articles"
+
+collections:
+  - name: "techniques"
+    label: "Techniques"
+    label_singular: "Article technique"
+    folder: "src/content/techniques"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de publication", name: "date", widget: "datetime", default: "{{now}}" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
+
+site_url: https://gleaming0427.github.io/karate-shotokai-lacroix-website
+display_url: https://gleaming0427.github.io/karate-shotokai-lacroix-website
+locale: "fr"

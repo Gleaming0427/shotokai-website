@@ -1,0 +1,53 @@
+---
+---
+
+<header class="site-header" id="header">
+  <div class="header-inner">
+    <a href="/#hero" class="header-logo" aria-label="Accueil — Karaté Shotokaï &amp; Iaijutsu Lacroix Falgarde">
+      <div class="header-logo-img" role="img" aria-label="Karaté Shotokaï &amp; Iaijutsu Lacroix Falgarde"></div>
+      <span>Karaté Shotokaï &amp; Iaijutsu<br/>Lacroix Falgarde</span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false">&#9776;</button>
+
+    <nav>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="/#hero">Accueil</a></li>
+        <li><a href="/#karate">Karaté Shotokaï</a></li>
+        <li><a href="/#iaijutsu">Iaijutsu</a></li>
+        <li><a href="/techniques/">Techniques</a></li>
+        <li><a href="/#horaires">Horaires &amp; Tarifs</a></li>
+        <li><a href="/#contact">Contacts</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  nav?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => { nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); });
+  });
+
+  // Scroll spy — surligne l'onglet actif selon la section visible
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        links.forEach(link => {
+          const href = link.getAttribute('href') || '';
+          link.classList.toggle('active', href === '#' + id || href.endsWith('/#' + id));
+        });
+      }
+    });
+  }, { rootMargin: '-50% 0px -50% 0px' });
+
+  sections.forEach(section => observer.observe(section));
+</script>
