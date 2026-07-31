@@ -371,11 +371,14 @@ a:hover { color: var(--color-accent-hover); }
   max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
   box-shadow: var(--shadow-lg); position: relative;
 }
-.event-modal-card img { width: 100%; max-height: 300px; object-fit: cover; display: block; border-radius: var(--radius) var(--radius) 0 0; }
+.event-modal-card img { width: 100%; height: auto; display: block; border-radius: var(--radius) var(--radius) 0 0; }
 
 .event-modal-body { padding: 1.5rem; text-align: center; }
 .event-modal-body h3 { font-size: 1.2rem; margin: .5rem 0 .4rem; }
 .event-modal-body p { color: var(--color-text-soft); font-size: .93rem; line-height: 1.6; }
+
+.event-card:not(:has(img)) { min-height: 260px; }
+.event-card:has(img) { min-height: 0; }
 
 .event-modal-close {
   position: absolute; top: .5rem; right: .5rem; z-index: 2;
