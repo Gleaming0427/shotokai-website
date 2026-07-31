@@ -50,4 +50,10 @@
   }, { rootMargin: '-50% 0px -50% 0px' });
 
   sections.forEach(section => observer.observe(section));
+
+  // Header plein au scroll
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('solid', window.scrollY > 10);
+  });
 </script>

@@ -1,56 +1,63 @@
 ---
-const serignanImg = `/images/serignan-2026.webp`;
+import { getCollection } from 'astro:content';
+
+const events = await getCollection('evenements');
+events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <section class="section" id="evenements">
   <div class="container">
     <h2 class="section-title">Événements à venir</h2>
 
-    <div class="events-scroll">
-      <!-- Stage Sérignan -->
-      <article class="event-card" id="event-serignan" style="cursor: pointer;">
-        <img src="/images/serignan-2026.webp" alt="Stage Sérignan 2026" loading="lazy" />
-        <div class="event-card-body">
-          <span class="event-tag">Stage national</span>
-          <h3>Stage à Sérignan</h3>
-          <p>Du 06 au 10 juillet 2026<br/>Organisé par la KDSE. Ouvert à tous les adhérents.</p>
-        </div>
-      </article>
-
-    </div>
+    {events.length === 0 ? (
+      <p style="text-align: center; color: var(--color-text-soft);">Aucun événement à venir.</p>
+    ) : (
+      <div class="events-scroll">
+        {events.map(event => (
+          <article class={`event-card ${!event.data.image ? 'event-card-text' : ''}`} id={event.data.image ? `event-${event.id}` : undefined} style={event.data.image ? 'cursor: pointer;' : ''}>
+            {event.data.image && (
+              <img src={event.data.image} alt={event.data.title} loading="lazy" />
+            )}
+            <div class="event-card-body">
+              <span class="event-tag">{event.data.tag}</span>
+              <h3>{event.data.title}</h3>
+              <p>{event.data.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
   </div>
 </section>
 
-<!-- Lightbox -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal-content">
-    <button class="modal-close" id="modal-close">&times;</button>
-    <img data-src="/images/serignan-2026.webp" alt="Stage Sérignan 2026" id="modal-img" />
-  </div>
-</div>
-
-<script>
-  const overlay = document.getElementById('modal-overlay')!;
-  const card = document.getElementById('event-serignan');
-  const close = document.getElementById('modal-close')!;
-  const modalImg = document.getElementById('modal-img') as HTMLImageElement;
-
-  card?.addEventListener('click', () => {
-    modalImg.src = modalImg.dataset.src || '';
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
-
-  function closeModal() {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  close.addEventListener('click', closeModal);
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-</script>
+<!-- Lightbox pour le premier événement avec image -->
+{events.filter(e => e.data.image).length > 0 && (
+  <>
+    <div class="modal-overlay" id="modal-overlay">
+      <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <img src="" alt="" id="modal-img" />
+      </div>
+    </div>
+    <script>
+      const overlay = document.getElementById('modal-overlay')!;
+      const close = document.getElementById('modal-close')!;
+      const modalImg = document.getElementById('modal-img') as HTMLImageElement;
+      document.querySelectorAll('.event-card img').forEach(img => {
+        img.closest('.event-card')?.addEventListener('click', () => {
+          const src = img.getAttribute('src') || '';
+          modalImg.src = src;
+          overlay.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      function closeModal() {
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      close.addEventListener('click', closeModal);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+    </script>
+  </>
+)}

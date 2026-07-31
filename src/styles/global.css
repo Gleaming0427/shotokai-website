@@ -97,6 +97,11 @@ a:hover { color: var(--color-accent-hover); }
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
   border-bottom: 1px solid rgba(0,0,0,.05);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.site-header.solid {
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 2px 12px rgba(0,0,0,.06);
 }
 
 .header-inner {
@@ -389,6 +394,8 @@ a:hover { color: var(--color-accent-hover); }
 
 .event-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: .3rem; }
 .event-card p { color: var(--color-text-soft); font-size: .88rem; line-height: 1.5; }
+.event-card-text { display: flex; align-items: center; justify-content: center; }
+.event-card-text .event-card-body { padding: 2rem 1.2rem; }
 
 /* ── Contact ── */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; max-width: 820px; margin: 0 auto; }
@@ -459,6 +466,16 @@ a:hover { color: var(--color-accent-hover); }
 .article-body li { margin-bottom: .3rem; }
 .article-body blockquote { border-left: 3px solid var(--color-accent); padding: .5rem 1rem; margin: 1.2rem 0; background: var(--color-bg-alt); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-style: italic; }
 .article-body a { color: var(--color-accent); text-decoration: underline; }
+.article-body a[href$=".pdf"] { display: inline-flex; align-items: center; gap: .4rem; background: var(--color-accent-subtle); padding: .5rem 1rem; border-radius: var(--radius-sm); font-weight: 600; text-decoration: none; }
+.article-body a[href$=".pdf"]::before { content: "📄"; font-size: 1.1rem; }
+.article-body a[href$=".pdf"]:hover { background: var(--color-accent); color: #fff; }
+
+/* Lightbox images */
+.img-lightbox { position: fixed; inset: 0; z-index: 300; background: rgba(0,0,0,.9); display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity var(--transition); }
+.img-lightbox.open { opacity: 1; pointer-events: auto; }
+.img-lightbox img { max-width: 100%; max-height: 90vh; border-radius: var(--radius-sm); }
+.img-lightbox-close { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; color: #fff; font-size: 2.5rem; cursor: pointer; opacity: .7; }
+.img-lightbox-close:hover { opacity: 1; }
 
 /* ── Footer ── */
 .site-footer {

@@ -40,6 +40,19 @@ collections:
           - bulleted-list
           - numbered-list
 
+  - name: "evenements"
+    label: "Événements"
+    label_singular: "Événement"
+    folder: "src/content/evenements"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Tag", name: "tag", widget: "string", hint: "Ex: Stage national, Saison 2026/2027" }
+      - { label: "Date", name: "date", widget: "datetime", format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Description", name: "body", widget: "text" }
+
 slug:
   encoding: "ascii"
   clean_accents: true

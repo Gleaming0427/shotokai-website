@@ -57,8 +57,15 @@ const { title, date, image } = article.data;
           <div class="prose article-body" set:html={marked.parse(article.body || '')} />
         </div>
       </article>
+
+      <!-- Lightbox image -->
+      <div class="img-lightbox" id="img-lightbox">
+        <button class="img-lightbox-close">&times;</button>
+        <img src="" alt="" id="img-lightbox-img" />
+      </div>
     </main>
     <Footer />
     <Fragment set:html={`<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"><\/script><script>window.netlifyIdentity&&window.netlifyIdentity.on("init",function(u){u||window.netlifyIdentity.on("login",function(){document.location.href="/admin/";})}),window.netlifyIdentity.init();<\/script>`} />
+    <Fragment set:html={`<script>var lb=document.getElementById("img-lightbox"),lbImg=document.getElementById("img-lightbox-img");document.querySelector(".article-body")?.addEventListener("click",function(e){e.target.tagName==="IMG"&&(lbImg.src=e.target.src,lbImg.alt=e.target.alt,lb.classList.add("open"))}),document.querySelector(".img-lightbox-close")?.addEventListener("click",function(){lb.classList.remove("open")}),lb?.addEventListener("click",function(e){e.target===lb&&lb.classList.remove("open")});<\/script>`} />
   </body>
 </html>
