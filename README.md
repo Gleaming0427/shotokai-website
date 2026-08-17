@@ -1,6 +1,6 @@
 # Site du Karaté Shotokai Lacroix-Falgarde
 
-**Live site:** [https://shotokai-website.netlify.app/](https://shotokai-website.netlify.app/)
+**Live site:** [https://karate-lacroix-falgarde.fr/](https://karate-lacroix-falgarde.fr/)
 
 Site vitrine du club, construit avec [Astro](https://astro.build) et déployé sur Netlify. Le contenu (articles techniques, événements) est éditable via une interface d'administration sans toucher au code.
 

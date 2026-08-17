@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://karate-shotokai-lacroix-falgarde.netlify.app',
+  site: 'https://karate-lacroix-falgarde.fr',
   output: 'static',
   integrations: [sitemap()],
 });
