@@ -7,4 +7,7 @@ export default defineConfig({
   site: 'https://karate-lacroix-falgarde.fr',
   output: 'static',
   integrations: [sitemap()],
+  build: {
+    inlineStylesheets: 'always',
+  },
 });
