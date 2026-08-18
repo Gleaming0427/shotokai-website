@@ -122,7 +122,7 @@ import '../styles/global.css';
       <Contact />
     </main>
     <Footer />
-    <Fragment set:html="<script src='https://identity.netlify.com/v1/netlify-identity-widget.js'><\/script><script>if(window.netlifyIdentity){window.netlifyIdentity.on('init',function(u){if(!u){window.netlifyIdentity.on('login',function(){document.location.href='/admin/';});}});window.netlifyIdentity.init();window.location.hash&&window.location.hash.includes('invite_token')&&window.netlifyIdentity.open('signup');}<\/script>" />
+    <Fragment set:html="<script defer src='https://identity.netlify.com/v1/netlify-identity-widget.js'><\/script><script>window.addEventListener('load',function(){if(window.netlifyIdentity){window.netlifyIdentity.on('init',function(u){if(!u){window.netlifyIdentity.on('login',function(){document.location.href='/admin/';});}});window.netlifyIdentity.init();window.location.hash&&window.location.hash.includes('invite_token')&&window.netlifyIdentity.open('signup');}});<\/script>" />
     <script>
       // Corrige le scroll vers l'ancre après chargement des images
       if (window.location.hash) {
