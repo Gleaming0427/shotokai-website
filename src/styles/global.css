@@ -564,6 +564,7 @@ a:hover { color: var(--color-accent-hover); }
     border-bottom: 1px solid var(--color-border); text-align: right;
   }
   .schedule-table td:last-child { border-bottom: none; }
+  .schedule-table td.price { white-space: normal; }
   .schedule-table td::before {
     content: attr(data-label); font-weight: 600; font-size: .72rem;
     color: var(--color-text-soft); text-align: left; flex-shrink: 0;
