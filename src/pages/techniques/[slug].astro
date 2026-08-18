@@ -4,6 +4,7 @@ import Footer from '../../components/Footer.astro';
 import '../../styles/global.css';
 import { getCollection } from 'astro:content';
 import { marked } from 'marked';
+import { getExcerpt } from '../../lib/excerpt';
 
 export async function getStaticPaths() {
   const articles = await getCollection('techniques');
@@ -15,6 +16,8 @@ export async function getStaticPaths() {
 
 const { article } = Astro.props;
 const { title, date, image } = article.data;
+const description = getExcerpt(article.body, 155);
+const pageUrl = new URL(`/techniques/${article.id}/`, Astro.site);
 ---
 
 <!doctype html>
@@ -28,16 +31,16 @@ const { title, date, image } = article.data;
     <meta name="generator" content={Astro.generator} />
 
     <title>{title} — Techniques — Karaté Shotokaï & Iaijutsu</title>
-    <meta name="description" content={article.body.substring(0, 160)} />
-    <link rel="canonical" href={`/techniques/${article.id}/`} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
     <meta name="robots" content="index, follow" />
 
     <meta property="og:title" content={`${title} — Techniques`} />
-    <meta property="og:description" content={article.body.substring(0, 160)} />
+    <meta property="og:description" content={description} />
     <meta property="og:type" content="article" />
-    <meta property="og:url" content={`/techniques/${article.id}/`} />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:locale" content="fr_FR" />
-    {image && <meta property="og:image" content={image} />}
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
   </head>
 
   <body class="page-inner">
