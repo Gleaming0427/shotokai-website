@@ -491,7 +491,6 @@ a:hover { color: var(--color-accent-hover); }
   font-size: .84rem; line-height: 1.8;
 }
 .site-footer a { color: rgba(255,255,255,.88); }
-.footer-eco { font-size: .8rem; opacity: .85; margin-top: .35rem; display: flex; align-items: center; justify-content: center; gap: .3rem; }
 .site-footer a:hover { color: var(--color-accent-hover); }
 .footer-eco { font-size: .8rem; opacity: .7; margin-top: .35rem; display: flex; align-items: center; justify-content: center; gap: .3rem; }
 .eco-leaf { color: #4caf50; flex-shrink: 0; }
@@ -555,11 +554,25 @@ a:hover { color: var(--color-accent-hover); }
   .nav-links a.active::after { display: none; }
   .nav-toggle { display: block; font-size: 2rem; padding: .5rem; }
 
-  /* Tableau scroll */
-  .schedule-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .schedule-table th,
-  .schedule-table td { padding: .65rem .55rem; font-size: .78rem; white-space: nowrap; }
-  .schedule-table th { font-size: .68rem; }
+  /* Tableau → cartes empilées (les colonnes Activité/Tarif ne tenaient pas à l'écran) */
+  .schedule-table thead { display: none; }
+  .schedule-table, .schedule-table tbody, .schedule-table tr, .schedule-table td { display: block; width: 100%; }
+  .schedule-table { border: none; background: none; }
+  .schedule-table tr {
+    background: var(--color-bg); border: 1px solid var(--color-border);
+    border-radius: var(--radius); margin-bottom: .85rem; overflow: hidden;
+  }
+  .schedule-table tr:last-child { margin-bottom: 0; }
+  .schedule-table td {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem; padding: .65rem .9rem; font-size: .85rem;
+    border-bottom: 1px solid var(--color-border); text-align: right;
+  }
+  .schedule-table td:last-child { border-bottom: none; }
+  .schedule-table td::before {
+    content: attr(data-label); font-weight: 600; font-size: .72rem;
+    color: var(--color-text-soft); text-align: left; flex-shrink: 0;
+  }
 
   .contact-form .btn { width: 100%; align-self: stretch; }
 
@@ -576,7 +589,7 @@ a:hover { color: var(--color-accent-hover); }
     --color-bg-alt: #262630;
     --color-text: #e4e4e8;
     --color-text-soft: #aaaab2;
-    --color-text-muted: #7e7e88;
+    --color-text-muted: #86868f;
     --color-border: #33333a;
   }
   .section-alt { background: #25252d; }
