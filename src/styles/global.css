@@ -504,20 +504,32 @@ a:hover { color: var(--color-accent-hover); }
 /* Tablette */
 @media (max-width: 900px) {
   .header-inner { padding: .55rem clamp(1rem, 2.5vw, 1.5rem); }
-  .nav-links { gap: clamp(1rem, 2vw, 1.6rem); }
-  .nav-links a { font-size: .74rem; letter-spacing: .04em; }
   .header-logo-img { width: 40px; height: 40px; }
   .header-logo span { font-size: .7rem; }
-  .nav-toggle { font-size: 2rem; padding: .5rem; }
+
+  /* Nav → menu burger (couvre aussi les tablettes en portrait, ex. iPad Air 820px,
+     où la nav horizontale complète ne tient plus proprement) */
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(255,255,255,.96); backdrop-filter: blur(18px);
+    flex-direction: column; gap: 0; padding: .5rem 1rem 1rem;
+    border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-lg);
+  }
+  .nav-links.open { display: flex; }
+
+  .nav-links a {
+    display: block; padding: .85rem .5rem; font-size: .95rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .nav-links li:last-child a { border-bottom: none; }
+  .nav-links a.active::after { display: none; }
+  .nav-toggle { display: block; font-size: 2rem; padding: .5rem; }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .container,
   .container-wide { padding: 0 1.25rem; }
-
-  .header-logo-img { width: 40px; height: 40px; }
-  .header-logo span { font-size: .7rem; }
 
   .hero { padding: 4.5rem 1.25rem 3rem; }
 
@@ -536,23 +548,6 @@ a:hover { color: var(--color-accent-hover); }
   .location-cta { text-align: center; }
 
   .blockquote { text-align: center; padding: 1.3rem 1.3rem; }
-
-  /* Nav mobile */
-  .nav-links {
-    display: none; position: absolute; top: 100%; left: 0; right: 0;
-    background: rgba(255,255,255,.96); backdrop-filter: blur(18px);
-    flex-direction: column; gap: 0; padding: .5rem 1rem 1rem;
-    border-bottom: 1px solid var(--color-border); box-shadow: var(--shadow-lg);
-  }
-  .nav-links.open { display: flex; }
-
-  .nav-links a {
-    display: block; padding: .85rem .5rem; font-size: .95rem;
-    border-bottom: 1px solid var(--color-border);
-  }
-  .nav-links li:last-child a { border-bottom: none; }
-  .nav-links a.active::after { display: none; }
-  .nav-toggle { display: block; font-size: 2rem; padding: .5rem; }
 
   /* Tableau → cartes empilées (les colonnes Activité/Tarif ne tenaient pas à l'écran) */
   .schedule-table thead { display: none; }
