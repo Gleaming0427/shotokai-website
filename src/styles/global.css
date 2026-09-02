@@ -9,10 +9,10 @@
   --color-bg-alt: #f7f7f8;
   --color-text: #1a1a1e;
   --color-text-soft: #5b5b66;
-  --color-text-muted: #6a6a74;
-  --color-accent: #3a7ab5;
-  --color-accent-hover: #5b96cc;
-  --color-accent-subtle: rgba(58,122,181,0.08);
+  --color-text-muted: #5f5f6a;
+  --color-accent: #3370a8;
+  --color-accent-hover: #2c6393;
+  --color-accent-subtle: rgba(51,112,168,.10);
   --color-border: #d5d5da;
   --color-success: #e8f5e9;
   --color-success-text: #2e7d32;
@@ -204,7 +204,7 @@ a:hover { color: var(--color-accent-hover); }
   border-color: rgba(255,255,255,.42);
   transform: translateY(-2px);
 }
-.hero-event:focus-visible { outline: 2px solid var(--color-accent-hover); outline-offset: 3px; }
+.hero-event:focus-visible { outline: 2px solid #8fc3ea; outline-offset: 3px; }
 .hero-event-icon { flex: 0 0 auto; display: flex; width: 24px; height: 24px; color: #8fc3ea; }
 .hero-event-body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
 .hero-event-label {
@@ -617,14 +617,18 @@ a:hover { color: var(--color-accent-hover); }
 @media (prefers-color-scheme: dark) {
   :root {
     --color-bg: #1a1a1e;
-    --color-bg-alt: #262630;
-    --color-text: #e4e4e8;
-    --color-text-soft: #aaaab2;
-    --color-text-muted: #86868f;
-    --color-border: #33333a;
+    --color-bg-alt: #2a2a34;
+    --color-text: #e9e9ee;
+    --color-text-soft: #b4b4bc;
+    --color-text-muted: #9696a2;
+    --color-border: #3a3a44;
+    --color-accent: #6fa8d6;
+    --color-accent-hover: #8fc3ea;
+    --color-accent-subtle: rgba(111,168,214,.15);
   }
-  .section-alt { background: #25252d; }
+  .section-alt { background: #2c2c36; }
   .site-header { background: rgba(18,18,22,.78); border-bottom-color: rgba(255,255,255,.06); }
+  .nav-links { background: rgba(18,18,22,.97); }
   .event-card { background: #222228; }
   .schedule-table { background: #222228; }
   .affiliation-item { background: #222228; }
@@ -634,6 +638,9 @@ a:hover { color: var(--color-accent-hover); }
   .prose strong { color: #fff; }
   .blockquote strong { color: #fff; }
   .modal-overlay { background: rgba(0,0,0,.92); }
+  .btn, .btn:hover, .skip-link, .event-tag { color: #0e2333; }
+  .article-body a[href$=".pdf"]:hover { color: #0e2333; }
+  .form-success { background: #16301d; color: #a5e0ab; }
 }
 
 /* Très petit */
