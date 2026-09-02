@@ -1,5 +1,5 @@
 ---
-// index.astro — Single page du site Karaté Shotokaï Lacroix-Falgarde
+// index.astro : Single page du site Karaté Shotokaï Lacroix-Falgarde
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import APropos from '../components/APropos.astro';
@@ -26,14 +26,14 @@ import '../styles/global.css';
     <link rel="preload" as="image" href={`/images/hero-bg.webp`} fetchpriority="high" />
 
     <!-- SEO -->
-    <title>Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde (31)</title>
+    <title>Karaté Shotokaï & Iaijutsu, Lacroix-Falgarde (31)</title>
 
     <!-- Structured data -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "SportsClub",
-        "name": "Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde",
+        "name": "Karaté Shotokaï & Iaijutsu, Lacroix-Falgarde",
         "description": "Club de Karaté-do Shotokaï et Iaijutsu à Lacroix-Falgarde, près de Toulouse. Pratique traditionnelle sans compétition, accessible à tous.",
         "url": "https://karate-lacroix-falgarde.fr/",
         "image": "https://karate-lacroix-falgarde.fr/images/hero-bg.webp",
@@ -93,7 +93,7 @@ import '../styles/global.css';
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde" />
+    <meta property="og:title" content="Karaté Shotokaï & Iaijutsu, Lacroix-Falgarde" />
     <meta property="og:description" content="Club de Karaté-do Shotokaï et Iaijutsu à Lacroix-Falgarde, près de Toulouse. Pratique traditionnelle sans compétition, accessible à tous." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={new URL('/', Astro.site)} />
@@ -104,7 +104,7 @@ import '../styles/global.css';
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Karaté Shotokaï & Iaijutsu — Lacroix-Falgarde" />
+    <meta name="twitter:title" content="Karaté Shotokaï & Iaijutsu, Lacroix-Falgarde" />
     <meta name="twitter:description" content="Club de Karaté-do Shotokaï et Iaijutsu. Pratique traditionnelle, pas de compétition." />
     <meta name="twitter:image" content={new URL('/images/hero-bg.webp', Astro.site)} />
   </head>

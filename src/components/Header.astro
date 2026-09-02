@@ -3,7 +3,7 @@
 
 <header class="site-header" id="header">
   <div class="header-inner">
-    <a href="/#hero" class="header-logo" aria-label="Accueil — Karaté Shotokaï &amp; Iaijutsu Lacroix Falgarde">
+    <a href="/#hero" class="header-logo" aria-label="Accueil : Karaté Shotokaï &amp; Iaijutsu Lacroix Falgarde">
       <div class="header-logo-img" role="img" aria-label="Karaté Shotokaï &amp; Iaijutsu Lacroix Falgarde"></div>
       <span>Karaté Shotokaï &amp; Iaijutsu<br/>Lacroix Falgarde</span>
     </a>
@@ -34,7 +34,7 @@
     link.addEventListener('click', () => { nav.classList.remove('open'); toggle?.setAttribute('aria-expanded', 'false'); });
   });
 
-  // Scroll spy — surligne l'onglet actif selon la section visible
+  // Scroll spy : surligne l'onglet actif selon la section visible
   const sections = document.querySelectorAll('section[id]');
   const links = document.querySelectorAll('.nav-links a');
   const observer = new IntersectionObserver(entries => {
