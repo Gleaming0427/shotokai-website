@@ -1,4 +1,9 @@
 ---
+import { getCollection } from 'astro:content';
+
+const events = await getCollection('evenements');
+events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const latestEvent = events[0];
 ---
 
 <section class="hero" id="hero">
@@ -8,5 +13,52 @@
     <h1><a href="/#horaires">Karaté Shotokaï &amp; Iaijutsu</a></h1>
     <p class="hero-tagline">Accessible à toutes et à tous, aux petits comme aux grands&nbsp;!</p>
     <a href="/#horaires" class="btn">Horaires et tarifs</a>
+
+    {latestEvent && (
+      <a
+        href="/#evenements"
+        class="hero-event"
+        id="hero-event"
+        data-image={latestEvent.data.image || ''}
+        data-tag={latestEvent.data.tag}
+        data-title={latestEvent.data.title}
+        data-desc={latestEvent.body || ''}
+      >
+        <svg class="hero-event-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="16" rx="2.5"></rect>
+          <path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3 10h18"></path>
+        </svg>
+        <span class="hero-event-body">
+          <span class="hero-event-label">Prochain événement</span>
+          <span class="hero-event-title">{latestEvent.data.title}</span>
+        </span>
+        <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18l6-6-6-6"></path>
+        </svg>
+      </a>
+    )}
   </div>
 </section>
+
+<script>
+  const heroEvent = document.getElementById('hero-event');
+  const modal = document.getElementById('event-modal');
+  if (heroEvent && modal) {
+    const emImg = document.getElementById('em-img') as HTMLImageElement;
+    const emTag = document.getElementById('em-tag')!;
+    const emTitle = document.getElementById('em-title')!;
+    const emDesc = document.getElementById('em-desc')!;
+
+    heroEvent.addEventListener('click', (e) => {
+      e.preventDefault();
+      const img = heroEvent.getAttribute('data-image');
+      if (img) { emImg.src = img; emImg.style.display = 'block'; }
+      else { emImg.style.display = 'none'; }
+      emTag.textContent = heroEvent.getAttribute('data-tag') || '';
+      emTitle.textContent = heroEvent.getAttribute('data-title') || '';
+      emDesc.textContent = heroEvent.getAttribute('data-desc') || '';
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+</script>
