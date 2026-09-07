@@ -1,6 +1,6 @@
 ---
 title: Maître Tetsuji MURAKAMI
-date: 20/07/2026
+date: 07/09/2026
 image: /images/articles/maitre-murakami_reduit__q54yrk.jpg
 ---
 ## 
