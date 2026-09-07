@@ -1,5 +1,11 @@
 ---
-// Horaires.astro
+import { getCollection } from 'astro:content';
+
+const tarifsEntries = await getCollection('tarifs');
+const tarifs = tarifsEntries[0]?.data;
+
+const contactEntries = await getCollection('contact');
+const contact = contactEntries[0]?.data;
 ---
 
 <section class="section section-alt" id="horaires">
@@ -16,28 +22,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td data-label="Public"><span class="day">Enfants</span><br/><small>(à partir de 7 ans)</small></td>
-          <td data-label="Jour &amp; Horaire">Mercredi 18h30 – 19h30</td>
-          <td data-label="Activité">Karaté</td>
-          <td data-label="Tarif" class="price">30 € / trimestre</td>
-        </tr>
-        <tr>
-          <td data-label="Public"><span class="day">Ados &amp; Adultes</span><br/><small>(à partir de 13 ans)</small></td>
-          <td data-label="Jour &amp; Horaire">Mercredi 19h30 – 21h15<br/>et Samedi 15h – 16h30</td>
-          <td data-label="Activité">Karaté</td>
-          <td data-label="Tarif" class="price">60 € / trimestre<br/><small>(les 2 séances incluses)</small></td>
-        </tr>
-        <tr>
-          <td data-label="Public"><span class="day">Ados &amp; Adultes</span><br/><small>(à partir de 13 ans)</small></td>
-          <td data-label="Jour &amp; Horaire">Samedi 14h – 15h</td>
-          <td data-label="Activité">Iaijutsu</td>
-          <td data-label="Tarif" class="price">60 € / trimestre</td>
-        </tr>
+        {tarifs?.lignes.map(ligne => (
+          <tr>
+            <td data-label="Public">
+              <span class="day">{ligne.public}</span>
+              {ligne.age && <Fragment><br /><small>({ligne.age})</small></Fragment>}
+            </td>
+            <td data-label="Jour &amp; Horaire">
+              {ligne.horaire.split('\n').map((part, i) => (
+                <Fragment>{i > 0 && <br />}{part}</Fragment>
+              ))}
+            </td>
+            <td data-label="Activité">{ligne.activite}</td>
+            <td data-label="Tarif" class="price">
+              {ligne.tarif}
+              {ligne.detail && <Fragment><br /><small>({ligne.detail})</small></Fragment>}
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
 
-    <p class="schedule-note">Les tarifs ne prennent pas en compte la cotisation à l'association KDSE ainsi que l'inscription à la FEKAMT.</p>
+    {tarifs?.note && <p class="schedule-note">{tarifs.note}</p>}
 
     <div class="location-grid">
       <div class="location-map" id="map-container">
@@ -47,8 +53,8 @@
         </button>
       </div>
       <div class="location-info">
-        <h3>Dojo Lacroix-Falgarde</h3>
-        <p><strong>Avenue de Falgarde</strong><br/>31120 Lacroix-Falgarde</p>
+        <h3>{contact?.adresse_titre || 'Dojo Lacroix-Falgarde'}</h3>
+        <p><strong>{contact?.adresse_rue || 'Avenue de Falgarde'}</strong><br/>{contact?.adresse_ville || '31120 Lacroix-Falgarde'}</p>
         <p style="margin-top: 0.5rem;">Près du centre commercial Verte Campagne, à côté des terrains de tennis.</p>
         <div class="location-cta">
           <a href="https://www.google.com/maps/dir/?api=1&destination=43.5042,1.4165" target="_blank" rel="noopener" class="btn">Y aller</a>

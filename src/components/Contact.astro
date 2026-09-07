@@ -1,5 +1,8 @@
 ---
-// Contact.astro
+import { getCollection } from 'astro:content';
+
+const contactEntries = await getCollection('contact');
+const contact = contactEntries[0]?.data;
 ---
 
 <section class="section section-alt" id="contact">
@@ -14,8 +17,8 @@
           </div>
           <div class="contact-text">
             <strong>Téléphone</strong>
-            <a href="tel:+33682665370">06 82 66 53 70</a>
-            <br/><small style="color: var(--color-text-muted);">Sensei Denis Le Goff</small>
+            <a href={`tel:${contact?.telephone || '+33682665370'}`}>{contact?.telephone_affiche || '06 82 66 53 70'}</a>
+            {contact?.telephone_nom && <Fragment><br /><small style="color: var(--color-text-muted);">{contact.telephone_nom}</small></Fragment>}
           </div>
         </div>
         <div class="contact-item">
@@ -32,8 +35,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </div>
           <div class="contact-text">
-            <strong>Dojo Lacroix-Falgarde</strong>
-            Avenue de Falgarde<br/>31120 Lacroix-Falgarde
+            <strong>{contact?.adresse_titre || 'Dojo Lacroix-Falgarde'}</strong>
+            {contact?.adresse_rue || 'Avenue de Falgarde'}<br/>{contact?.adresse_ville || '31120 Lacroix-Falgarde'}
           </div>
         </div>
       </div>

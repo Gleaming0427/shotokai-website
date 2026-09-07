@@ -5,8 +5,8 @@ import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { getExcerpt } from '../lib/excerpt';
 
-const articles = await getCollection('techniques');
-articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const events = await getCollection('evenements');
+events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
 <!doctype html>
@@ -19,19 +19,19 @@ articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     <meta name="color-scheme" content="light dark" />
     <meta name="generator" content={Astro.generator} />
 
-    <title>Techniques, Karaté Shotokaï & Iaijutsu</title>
-    <meta name="description" content="Articles techniques de Karaté-do Shotokaï et Iaijutsu par le dojo de Lacroix-Falgarde, près de Toulouse." />
-    <link rel="canonical" href={new URL('/techniques/', Astro.site)} />
+    <title>Événements du club — Karaté Shotokaï & Iaijutsu, Lacroix-Falgarde (31)</title>
+    <meta name="description" content="Tous les événements du club de Karaté Shotokaï et Iaijutsu de Lacroix-Falgarde : stages nationaux, rencontres mensuelles, reprise des cours." />
+    <link rel="canonical" href={new URL('/evenements/', Astro.site)} />
     <meta name="robots" content="index, follow" />
 
-    <meta property="og:title" content="Techniques, Karaté Shotokaï & Iaijutsu" />
-    <meta property="og:description" content="Articles techniques de Karaté-do Shotokaï et Iaijutsu." />
+    <meta property="og:title" content="Événements du club — Lacroix-Falgarde (31)" />
+    <meta property="og:description" content="Stages nationaux, rencontres mensuelles et reprise des cours du club de Karaté Shotokaï et Iaijutsu de Lacroix-Falgarde." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={new URL('/techniques/', Astro.site)} />
+    <meta property="og:url" content={new URL('/evenements/', Astro.site)} />
     <meta property="og:locale" content="fr_FR" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Techniques, Karaté Shotokaï & Iaijutsu" />
+    <meta name="twitter:title" content="Événements du club — Lacroix-Falgarde" />
   </head>
 
   <body class="page-inner">
@@ -40,27 +40,27 @@ articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     <main id="main">
       <section class="section" style="padding-top: 6rem;">
         <div class="container">
-          <h1 class="section-title" style="text-transform: none; letter-spacing: 0.04em;">Techniques</h1>
+          <h1 class="section-title" style="text-transform: none; letter-spacing: 0.04em;">Événements</h1>
           <p class="prose" style="text-align: center; margin-top: -1.5rem; margin-bottom: 3rem; color: var(--color-text-soft);">
-            Articles techniques du dojo de Lacroix-Falgarde : principes, pratique et approfondissement du Karaté Shotokaï.
+            Stages nationaux, rencontres mensuelles et reprise des cours du dojo de Lacroix-Falgarde.
           </p>
 
-          {articles.length === 0 ? (
-            <p style="text-align: center; color: var(--color-text-soft);">À venir prochainement.</p>
+          {events.length === 0 ? (
+            <p style="text-align: center; color: var(--color-text-soft);">Aucun événement à venir.</p>
           ) : (
             <div class="articles-grid">
-              {articles.map(article => (
-                <a href={`/techniques/${article.id}/`} class="article-card">
-                  {article.data.image && (
-                    <img src={article.data.image} alt={article.data.title} loading="lazy" />
+              {events.map(event => (
+                <a href={`/evenements/${event.id}/`} class="article-card">
+                  {event.data.image && (
+                    <img src={event.data.image} alt={event.data.title} loading="lazy" />
                   )}
                   <div class="article-card-body">
-                    <time datetime={article.data.date.toISOString().split('T')[0]}>
-                      {article.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    <time datetime={event.data.date.toISOString().split('T')[0]}>
+                      {event.data.date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
                     </time>
-                    <h2>{article.data.title}</h2>
-                    <p>{getExcerpt(article.body, 150)}</p>
-                    <span class="article-read-more">Lire la suite &rarr;</span>
+                    <h2>{event.data.title}</h2>
+                    <p>{getExcerpt(event.body, 150)}</p>
+                    <span class="article-read-more">En savoir plus &rarr;</span>
                   </div>
                 </a>
               ))}

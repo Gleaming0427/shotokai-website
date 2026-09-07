@@ -1,9 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
 
-const events = await getCollection('evenements');
-events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-const latestEvent = events[0];
+const repriseEntries = await getCollection('reprise');
+const reprise = repriseEntries[0];
+const repriseLabel = reprise?.data.label || 'Reprise des cours';
 ---
 
 <section class="hero" id="hero">
@@ -14,23 +14,23 @@ const latestEvent = events[0];
     <p class="hero-tagline">Accessible à toutes et à tous, aux petits comme aux grands&nbsp;!</p>
     <a href="/#horaires" class="btn">Horaires et tarifs</a>
 
-    {latestEvent && (
+    {reprise && (
       <a
         href="/#evenements"
         class="hero-event"
         id="hero-event"
-        data-image={latestEvent.data.image || ''}
-        data-tag={latestEvent.data.tag}
-        data-title={latestEvent.data.title}
-        data-desc={latestEvent.body || ''}
+        data-image=""
+        data-tag={repriseLabel}
+        data-title={reprise.data.title}
+        data-desc={reprise.body || ''}
       >
         <svg class="hero-event-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="5" width="18" height="16" rx="2.5"></rect>
           <path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3 10h18"></path>
         </svg>
         <span class="hero-event-body">
-          <span class="hero-event-label">Prochain événement</span>
-          <span class="hero-event-title">{latestEvent.data.title}</span>
+          <span class="hero-event-label">{repriseLabel}</span>
+          <span class="hero-event-title">{reprise.data.title}</span>
         </span>
         <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M6 9l6 6 6-6"></path>

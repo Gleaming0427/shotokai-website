@@ -1,0 +1,74 @@
+---
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+import { getExcerpt } from '../../lib/excerpt';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('karate-shotokai');
+  return articles.map(article => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { title, date, image } = article.data;
+const description = getExcerpt(article.body, 155);
+const pageUrl = new URL(`/karate-shotokai/${article.id}/`, Astro.site);
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}, Blog Karaté Shotokaï, Lacroix-Falgarde</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageUrl} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content={`${title}, Blog Karaté Shotokaï`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:locale" content="fr_FR" />
+    {image && <meta property="og:image" content={new URL(image, Astro.site)} />}
+  </head>
+
+  <body class="page-inner">
+    <a href="#main" class="skip-link">Aller au contenu</a>
+    <Header />
+    <main id="main">
+      <article class="section" style="padding-top: 6rem;">
+        <div class="container">
+          <p style="text-align:center;margin-bottom:1rem;">
+            <a href="/karate-shotokai/" style="color:var(--color-text-soft);font-size:.9rem;">&larr; Retour au blog Karaté Shotokaï</a>
+          </p>
+          <h1 class="section-title" style="text-transform:none;letter-spacing:.04em;">{title}</h1>
+          <time class="article-date" datetime={date.toISOString().split('T')[0]}>
+            {date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </time>
+          {image && <img src={image} alt={title} class="article-hero" />}
+          <div class="prose article-body" set:html={marked.parse(article.body || '')} />
+        </div>
+      </article>
+
+      <!-- Lightbox image -->
+      <div class="img-lightbox" id="img-lightbox">
+        <button class="img-lightbox-close">&times;</button>
+        <img src="" alt="" id="img-lightbox-img" />
+      </div>
+    </main>
+    <Footer />
+    <Fragment set:html={`<script>(function(){var needsIdentity=(window.location.hash&&window.location.hash.includes("invite_token"))||localStorage.getItem("gotrue.user");if(!needsIdentity)return;var s=document.createElement("script");s.src="https://identity.netlify.com/v1/netlify-identity-widget.js";s.onload=function(){window.netlifyIdentity&&window.netlifyIdentity.on("init",function(u){u||window.netlifyIdentity.on("login",function(){document.location.href="/admin/";})}),window.netlifyIdentity&&window.netlifyIdentity.init();};document.head.appendChild(s);})();<\/script>`} />
+    <Fragment set:html={`<script>var lb=document.getElementById("img-lightbox"),lbImg=document.getElementById("img-lightbox-img");document.querySelector(".article-body")?.addEventListener("click",function(e){e.target.tagName==="IMG"&&(lbImg.src=e.target.src,lbImg.alt=e.target.alt,lb.classList.add("open"))}),document.querySelector(".img-lightbox-close")?.addEventListener("click",function(){lb.classList.remove("open")}),lb?.addEventListener("click",function(e){e.target===lb&&lb.classList.remove("open")});<\/script>`} />
+  </body>
+</html>

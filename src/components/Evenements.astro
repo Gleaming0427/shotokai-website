@@ -3,17 +3,18 @@ import { getCollection } from 'astro:content';
 
 const events = await getCollection('evenements');
 events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const latestEvents = events.slice(0, 3);
 ---
 
 <section class="section" id="evenements">
   <div class="container">
     <h2 class="section-title">Événements à venir</h2>
 
-    {events.length === 0 ? (
+    {latestEvents.length === 0 ? (
       <p style="text-align: center; color: var(--color-text-soft);">Aucun événement à venir.</p>
     ) : (
       <div class="events-scroll">
-        {events.map(event => (
+        {latestEvents.map(event => (
           <article
             class="event-card"
             data-image={event.data.image || ''}
@@ -33,6 +34,10 @@ events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
         ))}
       </div>
     )}
+
+    <div style="text-align: center; margin-top: 1.5rem;">
+      <a class="btn" href="/evenements/">Tous les événements</a>
+    </div>
   </div>
 </section>
 

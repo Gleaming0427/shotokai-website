@@ -53,6 +53,122 @@ collections:
       - { label: "Image", name: "image", widget: "image", required: false }
       - { label: "Description", name: "body", widget: "text" }
 
+  - name: "karate-shotokai"
+    label: "Blog Karaté Shotokaï"
+    label_singular: "Article du blog"
+    folder: "src/content/karate-shotokai"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - label: "Contenu"
+        name: "body"
+        widget: "markdown"
+        default: "Écrivez votre article ici..."
+        modes:
+          - rich_text
+          - raw
+        default_mode: rich_text
+        buttons:
+          - bold
+          - italic
+          - code
+          - link
+          - heading-two
+          - heading-three
+          - quote
+          - bulleted-list
+          - numbered-list
+
+  - name: "iaijutsu"
+    label: "Blog Iaijutsu"
+    label_singular: "Article du blog"
+    folder: "src/content/iaijutsu"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: true
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
+      - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - label: "Contenu"
+        name: "body"
+        widget: "markdown"
+        default: "Écrivez votre article ici..."
+        modes:
+          - rich_text
+          - raw
+        default_mode: rich_text
+        buttons:
+          - bold
+          - italic
+          - code
+          - link
+          - heading-two
+          - heading-three
+          - quote
+          - bulleted-list
+          - numbered-list
+
+  - name: "reprise"
+    label: "Reprise des cours"
+    label_singular: "Reprise des cours"
+    editor:
+      preview: false
+    files:
+      - name: "reprise-des-cours"
+        label: "Reprise des cours"
+        file: "src/content/reprise/reprise-des-cours.md"
+        fields:
+          - { label: "Libellé affiché", name: "label", widget: "string", default: "Reprise des cours", hint: "Texte affiché au-dessus du titre dans le hero" }
+          - { label: "Titre", name: "title", widget: "string", hint: "Ex: Reprise des cours : mercredi 2 septembre 2026 à 18h30" }
+          - { label: "Date de reprise", name: "date", widget: "datetime", format: "DD/MM/YYYY", time_format: "HH:mm" }
+          - { label: "Description", name: "body", widget: "text", required: false }
+
+  - name: "tarifs"
+    label: "Horaires & Tarifs"
+    label_singular: "Ligne de tarif"
+    editor:
+      preview: false
+    files:
+      - name: "tarifs"
+        label: "Tarifs"
+        file: "src/content/tarifs/tarifs.md"
+        fields:
+          - label: "Lignes du tableau"
+            name: "lignes"
+            widget: "list"
+            fields:
+              - { label: "Public", name: "public", widget: "string", hint: "Ex: Enfants, Ados & Adultes" }
+              - { label: "Âge", name: "age", widget: "string", required: false, hint: "Ex: à partir de 7 ans" }
+              - { label: "Jour & Horaire", name: "horaire", widget: "text", hint: "Une ligne par créneau (Entrée pour un retour à la ligne)" }
+              - { label: "Activité", name: "activite", widget: "string", hint: "Ex: Karaté, Iaijutsu" }
+              - { label: "Tarif", name: "tarif", widget: "string", hint: "Ex: 30 € / trimestre" }
+              - { label: "Précision tarif", name: "detail", widget: "string", required: false, hint: "Ex: les 2 séances incluses" }
+          - { label: "Note sous le tableau", name: "note", widget: "text", required: false }
+
+  - name: "contact"
+    label: "Contact"
+    label_singular: "Coordonnées"
+    editor:
+      preview: false
+    files:
+      - name: "contact"
+        label: "Coordonnées du club"
+        file: "src/content/contact/contact.md"
+        fields:
+          - { label: "Téléphone (format tel:)", name: "telephone", widget: "string", hint: "Ex: +33682665370" }
+          - { label: "Téléphone affiché", name: "telephone_affiche", widget: "string", hint: "Ex: 06 82 66 53 70" }
+          - { label: "Nom affiché sous le téléphone", name: "telephone_nom", widget: "string", required: false }
+          - { label: "Titre de l'adresse", name: "adresse_titre", widget: "string" }
+          - { label: "Rue", name: "adresse_rue", widget: "string" }
+          - { label: "Code postal et ville", name: "adresse_ville", widget: "string" }
+
 slug:
   encoding: "ascii"
   clean_accents: true
