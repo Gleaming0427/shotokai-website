@@ -17,6 +17,7 @@ const techniques = defineCollection({
     title: z.string(),
     date: dateSchema,
     image: z.string().optional(),
+    url: z.string().optional(),
   }),
 });
 
@@ -27,6 +28,7 @@ const evenements = defineCollection({
     tag: z.string(),
     date: dateSchema,
     image: z.string().optional(),
+    url: z.string().optional(),
   }),
 });
 
@@ -36,6 +38,7 @@ const karateShotokai = defineCollection({
     title: z.string(),
     date: dateSchema,
     image: z.string().optional(),
+    url: z.string().optional(),
   }),
 });
 
@@ -45,6 +48,7 @@ const iaijutsu = defineCollection({
     title: z.string(),
     date: dateSchema,
     image: z.string().optional(),
+    url: z.string().optional(),
   }),
 });
 
@@ -54,6 +58,7 @@ const reprise = defineCollection({
     label: z.string().optional(),
     title: z.string(),
     date: dateSchema,
+    heure: z.string().optional(),
   }),
 });
 

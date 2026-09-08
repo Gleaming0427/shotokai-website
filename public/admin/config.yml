@@ -21,6 +21,7 @@ collections:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - { label: "URL de l'article", name: "url", widget: "string", required: false, hint: "Personnaliser l'URL (sans / ni accents). Vide = URL automatique issue du nom de fichier. Attention : si l'article est déjà publié, signaler l'ancienne URL pour ajouter une redirection." }
       - label: "Contenu"
         name: "body"
         widget: "markdown"
@@ -51,6 +52,7 @@ collections:
       - { label: "Tag", name: "tag", widget: "string", hint: "Ex: Stage national, Saison 2026/2027" }
       - { label: "Date", name: "date", widget: "datetime", format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "URL de l'événement", name: "url", widget: "string", required: false, hint: "Personnaliser l'URL (sans / ni accents). Vide = URL automatique issue du nom de fichier. Attention : si l'événement est déjà publié, signaler l'ancienne URL pour ajouter une redirection." }
       - { label: "Description", name: "body", widget: "text" }
 
   - name: "karate-shotokai"
@@ -65,6 +67,7 @@ collections:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - { label: "URL de l'article", name: "url", widget: "string", required: false, hint: "Personnaliser l'URL (sans / ni accents). Vide = URL automatique issue du nom de fichier. Attention : si l'article est déjà publié, signaler l'ancienne URL pour ajouter une redirection." }
       - label: "Contenu"
         name: "body"
         widget: "markdown"
@@ -96,6 +99,7 @@ collections:
       - { label: "Titre", name: "title", widget: "string" }
       - { label: "Date", name: "date", widget: "datetime", default: "{{now}}", format: "DD/MM/YYYY", time_format: "HH:mm" }
       - { label: "Image", name: "image", widget: "image", required: false, hint: "Image d'en-tête de l'article" }
+      - { label: "URL de l'article", name: "url", widget: "string", required: false, hint: "Personnaliser l'URL (sans / ni accents). Vide = URL automatique issue du nom de fichier. Attention : si l'article est déjà publié, signaler l'ancienne URL pour ajouter une redirection." }
       - label: "Contenu"
         name: "body"
         widget: "markdown"
@@ -128,6 +132,7 @@ collections:
           - { label: "Libellé affiché", name: "label", widget: "string", default: "Reprise des cours", hint: "Texte affiché au-dessus du titre dans le hero" }
           - { label: "Titre", name: "title", widget: "string", hint: "Ex: Reprise des cours : mercredi 2 septembre 2026 à 18h30" }
           - { label: "Date de reprise", name: "date", widget: "datetime", format: "DD/MM/YYYY", time_format: "HH:mm" }
+          - { label: "Heure", name: "heure", widget: "string", required: false, hint: "Ex: 18h30 — affichée sur la carte du hero" }
           - { label: "Description", name: "body", widget: "text", required: false }
 
   - name: "tarifs"

@@ -1,9 +1,11 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { getExcerpt } from '../lib/excerpt';
+import { articleSlug } from '../lib/url';
 
 const articles = await getCollection('karate-shotokai');
 articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
@@ -40,6 +42,7 @@ articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
     <main id="main">
       <section class="section" style="padding-top: 6rem;">
         <div class="container">
+          <Breadcrumb items={[{ label: 'Karaté Shotokaï' }]} />
           <h1 class="section-title" style="text-transform: none; letter-spacing: 0.04em;">Karaté Shotokaï</h1>
           <p class="prose" style="text-align: center; margin-top: -1.5rem; margin-bottom: 3rem; color: var(--color-text-soft);">
             Histoire, principes et pratique de cet art martial japonais traditionnel, au dojo de Lacroix-Falgarde.
@@ -50,7 +53,7 @@ articles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
           ) : (
             <div class="articles-grid">
               {articles.map(article => (
-                <a href={`/karate-shotokai/${article.id}/`} class="article-card">
+                <a href={`/karate-shotokai/${articleSlug(article)}/`} class="article-card">
                   {article.data.image && (
                     <img src={article.data.image} alt={article.data.title} loading="lazy" />
                   )}

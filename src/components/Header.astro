@@ -1,4 +1,13 @@
 ---
+// Sur l'accueil, les items pointent vers les sections ; sur les pages internes,
+// vers les blogs correspondants, avec l'item actif surligné.
+const { pathname } = Astro.url;
+const isHome = pathname === '/';
+const blogActive = pathname.startsWith('/karate-shotokai') ? 'karate'
+  : pathname.startsWith('/iaijutsu') ? 'iaijutsu'
+  : pathname.startsWith('/techniques') ? 'techniques'
+  : pathname.startsWith('/evenements') ? 'evenements'
+  : '';
 ---
 
 <header class="site-header" id="header">
@@ -13,9 +22,10 @@
     <nav>
       <ul class="nav-links" id="nav-links">
         <li><a href="/#hero">Accueil</a></li>
-        <li><a href="/#karate">Karaté Shotokaï</a></li>
-        <li><a href="/#iaijutsu">Iaijutsu</a></li>
-        <li><a href="/techniques/">Techniques</a></li>
+        <li><a href={isHome ? '/#karate' : '/karate-shotokai/'} class:list={{ active: blogActive === 'karate' }}>Karaté Shotokaï</a></li>
+        <li><a href={isHome ? '/#iaijutsu' : '/iaijutsu/'} class:list={{ active: blogActive === 'iaijutsu' }}>Iaijutsu</a></li>
+        <li><a href="/techniques/" class:list={{ active: blogActive === 'techniques' }}>Techniques</a></li>
+        <li><a href={isHome ? '/#evenements' : '/evenements/'} class:list={{ active: blogActive === 'evenements' }}>Événements</a></li>
         <li><a href="/#horaires">Horaires &amp; Tarifs</a></li>
         <li><a href="/#contact">Contacts</a></li>
       </ul>

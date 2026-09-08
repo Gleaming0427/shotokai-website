@@ -124,14 +124,15 @@ a:hover { color: var(--color-accent-hover); }
 
 .header-logo span {
   font-size: .72rem; font-weight: 650; line-height: 1.35; color: var(--color-text-soft);
+  white-space: nowrap;
 }
 
-.nav-links { display: flex; gap: clamp(1.5rem, 3vw, 2.8rem); list-style: none; }
+.nav-links { display: flex; gap: clamp(1rem, 1.8vw, 2rem); list-style: none; }
 
 .nav-links a {
-  color: var(--color-text-soft); font-size: .78rem; font-weight: 600;
+  color: var(--color-text-soft); font-size: .76rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: .05em; padding: .3rem 0;
-  transition: color var(--transition-fast);
+  white-space: nowrap; transition: color var(--transition-fast);
 }
 .nav-links a:hover,
 .nav-links a.active { color: var(--color-accent); }
@@ -187,16 +188,15 @@ a:hover { color: var(--color-accent-hover); }
 }
 
 .hero-event {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: .45rem;
+  display: flex; align-items: center; gap: .95rem;
   margin: clamp(1.4rem, 2.5vw, 2rem) auto 0;
-  padding: 1.05rem 1.25rem .95rem;
-  max-width: 440px; width: 100%;
+  padding: .95rem 1.15rem;
+  max-width: 480px; width: 100%;
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.22);
-  border-radius: 14px;
+  border-radius: 16px;
   backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  color: #fff; text-align: center; text-decoration: none;
+  color: #fff; text-align: left; text-decoration: none;
   transition: all var(--transition);
 }
 .hero-event:hover {
@@ -205,21 +205,36 @@ a:hover { color: var(--color-accent-hover); }
   transform: translateY(-2px);
 }
 .hero-event:focus-visible { outline: 2px solid #8fc3ea; outline-offset: 3px; }
-.hero-event-icon { flex: 0 0 auto; display: flex; width: 24px; height: 24px; color: #8fc3ea; }
-.hero-event-body { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+
+/* Vignette calendrier */
+.hero-event-date {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .1rem; min-width: 68px; padding: .6rem .85rem;
+  background: linear-gradient(160deg, #9ccaea, #6faddb);
+  color: #0e2333; border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.28);
+}
+.hero-event-date-day { font-size: 1.55rem; font-weight: 800; line-height: 1; }
+.hero-event-date-month {
+  font-size: .68rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; line-height: 1.2;
+}
+
+.hero-event-body { display: flex; flex-direction: column; gap: .2rem; min-width: 0; }
 .hero-event-label {
   font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
   color: #8fc3ea;
 }
 .hero-event-title {
-  font-size: .92rem; font-weight: 600; line-height: 1.35; color: #fff;
+  font-size: .95rem; font-weight: 600; line-height: 1.4; color: #fff;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .hero-event-arrow {
-  flex: 0 0 auto; color: rgba(255,255,255,.6);
+  flex: 0 0 auto; margin-left: auto; color: rgba(255,255,255,.6);
   transition: transform var(--transition-fast);
 }
-.hero-event:hover .hero-event-arrow { transform: translateY(3px); }
+.hero-event:hover .hero-event-arrow { transform: translateX(3px); }
 
 /* ── Boutons ── */
 .btn {
@@ -358,15 +373,6 @@ a:hover { color: var(--color-accent-hover); }
   box-shadow: var(--shadow-sm); background: var(--color-bg-alt);
 }
 .location-map iframe { width: 100%; height: 100%; border: none; }
-.map-load-btn {
-  width: 100%; height: 100%; border: none; background: var(--color-bg-alt);
-  cursor: pointer; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: .4rem;
-  font-family: var(--font); color: var(--color-text-soft);
-  font-size: .9rem; transition: all var(--transition);
-}
-.map-load-btn span:first-child { font-size: 2rem; }
-.map-load-btn:hover { color: var(--color-accent); background: var(--color-bg); }
 .location-info h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .5rem; }
 .location-info p { color: var(--color-text-soft); font-size: .93rem; line-height: 1.6; }
 .location-cta { margin-top: 1.25rem; }
@@ -537,10 +543,12 @@ a:hover { color: var(--color-accent-hover); }
    ═══════════════════════════════════════ */
 
 /* Tablette */
-@media (max-width: 900px) {
+@media (max-width: 960px) {
   .header-inner { padding: .55rem clamp(1rem, 2.5vw, 1.5rem); }
   .header-logo-img { width: 40px; height: 40px; }
-  .header-logo span { font-size: .7rem; }
+  .header-logo span {
+    font-size: .9rem; color: var(--color-text); white-space: normal;
+  }
 
   /* Nav → menu burger (couvre aussi les tablettes en portrait, ex. iPad Air 820px,
      où la nav horizontale complète ne tient plus proprement) */
@@ -569,6 +577,10 @@ a:hover { color: var(--color-accent-hover); }
   .hero { padding: 4.5rem 1.25rem 3rem; }
 
   .hero-logo { width: clamp(110px, 30vw, 150px); height: clamp(110px, 30vw, 150px); }
+
+  .hero-event { gap: .7rem; padding: .85rem 1rem; }
+  .hero-event-date { min-width: 62px; padding: .5rem .7rem; }
+  .hero-event-date-day { font-size: 1.35rem; }
 
   .section-title { margin-bottom: 2.2rem; }
 
@@ -659,4 +671,21 @@ a:hover { color: var(--color-accent-hover); }
   .contact-icon svg { width: 18px; height: 18px; }
 
   .schedule-note { font-size: .76rem; }
+}
+
+/* ── Fil d'Ariane ── */
+.breadcrumb {
+  text-align: center; margin-bottom: 1.2rem;
+  font-size: .9rem; color: var(--color-text-soft);
+}
+.breadcrumb a {
+  color: var(--color-text-soft); text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.breadcrumb a:hover { color: var(--color-accent); text-decoration: underline; }
+.breadcrumb-sep { margin: 0 .5rem; opacity: .55; }
+.breadcrumb-current {
+  color: var(--color-text); font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40ch;
+  display: inline-block; vertical-align: bottom;
 }

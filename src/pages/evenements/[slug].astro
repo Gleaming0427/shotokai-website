@@ -1,14 +1,16 @@
 ---
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import '../../styles/global.css';
 import { getCollection } from 'astro:content';
 import { getExcerpt } from '../../lib/excerpt';
+import { articleSlug } from '../../lib/url';
 
 export async function getStaticPaths() {
   const events = await getCollection('evenements');
   return events.map(event => ({
-    params: { slug: event.id },
+    params: { slug: articleSlug(event) },
     props: { event },
   }));
 }
@@ -16,7 +18,7 @@ export async function getStaticPaths() {
 const { event } = Astro.props;
 const { title, tag, date, image } = event.data;
 const description = getExcerpt(event.body, 155);
-const pageUrl = new URL(`/evenements/${event.id}/`, Astro.site);
+const pageUrl = new URL(`/evenements/${articleSlug(event)}/`, Astro.site);
 ---
 
 <!doctype html>
@@ -48,9 +50,7 @@ const pageUrl = new URL(`/evenements/${event.id}/`, Astro.site);
     <main id="main">
       <article class="section" style="padding-top: 6rem;">
         <div class="container">
-          <p style="text-align:center;margin-bottom:1rem;">
-            <a href="/evenements/" style="color:var(--color-text-soft);font-size:.9rem;">&larr; Retour aux événements</a>
-          </p>
+          <Breadcrumb items={[{ label: 'Événements', href: '/evenements/' }, { label: title }]} />
           <h1 class="section-title" style="text-transform:none;letter-spacing:.04em;">{title}</h1>
           <time class="article-date" datetime={date.toISOString().split('T')[0]}>
             {date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}

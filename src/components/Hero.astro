@@ -4,6 +4,16 @@ import { getCollection } from 'astro:content';
 const repriseEntries = await getCollection('reprise');
 const reprise = repriseEntries[0];
 const repriseLabel = reprise?.data.label || 'Reprise des cours';
+
+const repriseDate = reprise?.data.date;
+const MOIS_COURTS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+const jour = repriseDate ? String(repriseDate.getDate()).padStart(2, '0') : '';
+const moisCourt = repriseDate ? MOIS_COURTS[repriseDate.getMonth()] : '';
+const annee = repriseDate ? String(repriseDate.getFullYear()) : '';
+const dateLigne = repriseDate
+  ? repriseDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).replace(/^./, (c) => c.toUpperCase())
+  : '';
+const heure = reprise?.data.heure || '';
 ---
 
 <section class="hero" id="hero">
@@ -24,16 +34,16 @@ const repriseLabel = reprise?.data.label || 'Reprise des cours';
         data-title={reprise.data.title}
         data-desc={reprise.body || ''}
       >
-        <svg class="hero-event-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="16" rx="2.5"></rect>
-          <path d="M8 3v4"></path><path d="M16 3v4"></path><path d="M3 10h18"></path>
-        </svg>
+        <span class="hero-event-date" aria-hidden="true">
+          <span class="hero-event-date-day">{jour}</span>
+          <span class="hero-event-date-month">{moisCourt} {annee}</span>
+        </span>
         <span class="hero-event-body">
           <span class="hero-event-label">{repriseLabel}</span>
-          <span class="hero-event-title">{reprise.data.title}</span>
+          <span class="hero-event-title">{heure ? `${dateLigne} • ${heure}` : dateLigne}</span>
         </span>
         <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6"></path>
+          <path d="M9 6l6 6-6 6"></path>
         </svg>
       </a>
     )}
