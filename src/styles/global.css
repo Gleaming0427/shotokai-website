@@ -640,7 +640,10 @@ a:hover { color: var(--color-accent-hover); }
   }
   .section-alt { background: #2c2c36; }
   .site-header { background: rgba(18,18,22,.78); border-bottom-color: rgba(255,255,255,.06); }
-  .nav-links { background: rgba(18,18,22,.97); }
+  /* Fond du menu déroulant uniquement (mobile) — évite la bande noire sur la nav de bureau */
+  @media (max-width: 960px) {
+    .nav-links { background: rgba(18,18,22,.97); }
+  }
   .event-card { background: #222228; }
   .schedule-table { background: #222228; }
   .affiliation-item { background: #222228; }
