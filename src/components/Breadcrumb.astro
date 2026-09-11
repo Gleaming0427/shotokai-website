@@ -3,6 +3,22 @@ interface Props {
   items: { label: string; href?: string }[];
 }
 const { items } = Astro.props;
+
+const base = new URL(Astro.site || 'https://karate-lacroix-falgarde.fr/');
+const crumbs = [
+  { label: 'Accueil', href: new URL('/', base).href },
+  ...items.map(item => ({ label: item.label, href: item.href ? new URL(item.href, base).href : undefined })),
+];
+const breadcrumbJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: c.href } : {}),
+  })),
+});
 ---
 
 <nav class="breadcrumb" aria-label="Fil d'Ariane">
@@ -14,3 +30,5 @@ const { items } = Astro.props;
     </Fragment>
   ))}
 </nav>
+
+<script type="application/ld+json" set:html={breadcrumbJson}></script>

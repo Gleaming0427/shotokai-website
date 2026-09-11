@@ -1,0 +1,54 @@
+---
+const faqs = [
+  {
+    q: 'Où se trouve le club de karaté de Lacroix-Falgarde ?',
+    a: "Le dojo se situe avenue de Falgarde, 31120 Lacroix-Falgarde, à côté des terrains de tennis et du centre commercial Verte Campagne. Il est à 15 minutes au sud de Toulouse, à 3 minutes de Pinsaguel et à 5 minutes de Portet-sur-Garonne.",
+  },
+  {
+    q: 'Le club accueille-t-il les débutants ?',
+    a: "Oui. Les cours sont ouverts aux débutants comme aux pratiquants confirmés, aux enfants à partir de 7 ans et aux adultes. Aucune expérience préalable n'est nécessaire.",
+  },
+  {
+    q: 'Y a-t-il de la compétition au club ?',
+    a: "Non. Le Karaté Shotokaï et l'Iaijutsu se pratiquent dans un esprit traditionnel, sans compétition ni médaille : la recherche porte sur l'efficacité, la fluidité et l'harmonie avec le partenaire.",
+  },
+  {
+    q: 'Quels arts martiaux sont enseignés au club ?',
+    a: "Le club enseigne deux arts martiaux japonais : le Karaté-do Shotokaï (à mains nues) et l'Iaijutsu (le sabre japonais), tous deux encadrés par Sensei Denis Le Goff, 5e dan.",
+  },
+  {
+    q: 'Quels sont les horaires et les tarifs ?',
+    a: "Les cours ont lieu le mercredi de 18h30 à 21h15 et le samedi de 14h à 16h30. Les tarifs vont de 30 € à 60 € par trimestre selon les séances choisies. Consultez la section Horaires et tarifs pour le détail.",
+  },
+  {
+    q: 'Quelles communes sont desservies par le dojo ?',
+    a: "Le dojo accueille les pratiquants de Toulouse et des communes voisines : Lacroix-Falgarde, Pinsaguel, Portet-sur-Garonne, Roques, Roquettes, Pins-Justaret, Vieille-Toulouse, Goyrans, Villate, Saubens et Muret.",
+  },
+];
+
+const faqJson = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+});
+---
+
+<section class="section" id="faq">
+  <div class="container">
+    <h2 class="section-title">Questions fréquentes</h2>
+    <div class="faq-list">
+      {faqs.map(f => (
+        <details class="faq-item">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={faqJson}></script>

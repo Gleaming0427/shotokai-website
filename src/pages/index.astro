@@ -7,6 +7,7 @@ import Karate from '../components/Karate.astro';
 import Iaijutsu from '../components/Iaijutsu.astro';
 import Horaires from '../components/Horaires.astro';
 import Evenements from '../components/Evenements.astro';
+import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -22,6 +23,10 @@ const ldJson = JSON.stringify({
   description: "Club d'arts martiaux à Lacroix-Falgarde, près de Toulouse : Karaté-do Shotokaï et Iaijutsu. Pratique traditionnelle sans compétition, accessible à tous.",
   url: 'https://karate-lacroix-falgarde.fr/',
   image: 'https://karate-lacroix-falgarde.fr/images/hero-bg.webp',
+  logo: 'https://karate-lacroix-falgarde.fr/images/logo.webp',
+  alternateName: 'Karaté Shotokaï & Iaijutsu Lacroix-Falgarde',
+  knowsAbout: ['Karaté-do Shotokaï', 'Iaijutsu', 'Arts martiaux japonais'],
+  hasMap: 'https://www.google.com/maps?q=43.5042,1.4165',
   telephone: contact?.telephone || '+33682665370',
   priceRange: '30€-60€',
   address: {
@@ -105,6 +110,7 @@ const ldJson = JSON.stringify({
       <Iaijutsu />
       <Horaires />
       <Evenements />
+      <FAQ />
       <Contact />
     </main>
     <Footer />
