@@ -8,6 +8,8 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
 <div
   class="cookie-banner"
   id="cookie-banner"
+  role="region"
+  aria-label="Consentement aux cookies"
   hidden
   data-ga-id={GA_MEASUREMENT_ID}
   data-ga-configured={String(GA_CONFIGURED)}
