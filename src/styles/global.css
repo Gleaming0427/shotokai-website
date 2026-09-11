@@ -711,3 +711,43 @@ a:hover { color: var(--color-accent-hover); }
 .faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
 .faq-item summary:hover { color: var(--color-accent); }
 .faq-item p { padding: 0 0 1.2rem; color: var(--color-text-soft); line-height: 1.7; }
+
+/* ── Bandeau cookies ── */
+.cookie-banner {
+  position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%);
+  z-index: 300; max-width: 640px; width: calc(100% - 2rem);
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: var(--radius); padding: 1rem 1.25rem;
+  box-shadow: var(--shadow-lg);
+}
+.cookie-banner[hidden] { display: none; }
+.cookie-banner-text {
+  flex: 1 1 260px; font-size: .85rem;
+  color: var(--color-text-soft); line-height: 1.5;
+}
+.cookie-banner-actions { display: flex; gap: .6rem; }
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; color: var(--color-accent);
+  border: 1.5px solid var(--color-accent);
+  border-radius: var(--radius-full); height: 3rem;
+  padding: 0 clamp(1.2rem, 3vw, 2rem);
+  font-size: .88rem; font-weight: 600; letter-spacing: .03em;
+  cursor: pointer; transition: all var(--transition);
+}
+.btn-ghost:hover { background: var(--color-accent-subtle); }
+.cookie-manage {
+  display: block; margin: .5rem auto 0;
+  background: none; border: none; cursor: pointer;
+  color: var(--color-text-soft); font-size: .8rem;
+  text-decoration: underline; font-family: var(--font);
+  transition: color var(--transition-fast);
+}
+.cookie-manage:hover { color: var(--color-accent); }
+
+@media (max-width: 420px) {
+  .cookie-banner-actions { width: 100%; flex-direction: column; }
+  .cookie-banner-actions .btn,
+  .cookie-banner-actions .btn-ghost { width: 100%; }
+}

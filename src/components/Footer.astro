@@ -1,4 +1,5 @@
 ---
+import Analytics from './Analytics.astro';
 ---
 
 <footer class="site-footer">
@@ -13,5 +14,7 @@
       ~0,03&nbsp;g de CO<sub>2</sub> par visite (<a href="https://sustainablewebdesign.org/calculating-digital-emissions/" target="_blank" rel="noopener">méthodologie</a>)
     </p>
     <p style="margin-top: 0.25rem;"><a href="/#hero">Retour en haut &uarr;</a></p>
+    <button type="button" class="cookie-manage" onclick="window.__openCookieBanner?.()">Gérer mes cookies</button>
   </div>
+  <Analytics />
 </footer>

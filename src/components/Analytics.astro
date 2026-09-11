@@ -1,0 +1,62 @@
+---
+// Mesure d'audience GA4 + consentement RGPD.
+const GA_MEASUREMENT_ID = 'G-YZSXPEMXY2';
+// Placeholder = non configuré : aucune requête ne partira vers Google
+const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASUREMENT_ID as string) !== 'G-XXXXXXXXXX';
+---
+
+<div
+  class="cookie-banner"
+  id="cookie-banner"
+  hidden
+  data-ga-id={GA_MEASUREMENT_ID}
+  data-ga-configured={String(GA_CONFIGURED)}
+>
+  <p class="cookie-banner-text">
+    Ce site utilise Google Analytics pour mesurer l'audience et améliorer son contenu.
+    Aucun suivi n'est activé avant votre choix, que vous pouvez modifier à tout moment.
+  </p>
+  <div class="cookie-banner-actions">
+    <button type="button" class="btn-ghost" id="cookie-refuse">Tout refuser</button>
+    <button type="button" class="btn" id="cookie-accept">Tout accepter</button>
+  </div>
+</div>
+
+<script>
+  const banner = document.getElementById('cookie-banner') as HTMLElement;
+  const GA_MEASUREMENT_ID = banner.dataset.gaId || '';
+  const GA_CONFIGURED = banner.dataset.gaConfigured === 'true';
+  const CONSENT_KEY = 'ga_consent';
+
+  const loadGtag = () => {
+    if (!GA_CONFIGURED) {
+      console.warn('GA4 : ID de mesure non configuré (remplacer dans src/components/Analytics.astro).');
+      return;
+    }
+    const s = document.createElement('script');
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
+    s.async = true;
+    document.head.appendChild(s);
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).gtag = function () { (window as any).dataLayer.push(arguments); };
+    (window as any).gtag('js', new Date());
+    (window as any).gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+  };
+
+  const setConsent = (value: 'granted' | 'denied') => {
+    try { localStorage.setItem(CONSENT_KEY, value); } catch {}
+    banner.hidden = true;
+    if (value === 'granted') loadGtag();
+  };
+
+  // Réouverture du bandeau (lien « Gérer mes cookies » du footer)
+  (window as any).__openCookieBanner = () => { banner.hidden = false; };
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => setConsent('granted'));
+  document.getElementById('cookie-refuse')?.addEventListener('click', () => setConsent('denied'));
+
+  let stored: string | null = null;
+  try { stored = localStorage.getItem(CONSENT_KEY); } catch {}
+  if (stored === 'granted') loadGtag();
+  else if (stored !== 'denied') banner.hidden = false;
+</script>
