@@ -30,14 +30,17 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
   const GA_CONFIGURED = banner.dataset.gaConfigured === 'true';
   const CONSENT_KEY = 'ga_consent';
 
-  // Signaux du mode Consentement (v2) : tout refusé par défaut, avant tout chargement
+  // Signaux du mode Consentement (v2) : tout refusé par défaut, avant tout chargement.
+  // Format officiel Google : pousser `arguments` dans dataLayer (un tableau ne fonctionne pas).
   (window as any).dataLayer = (window as any).dataLayer || [];
-  const gtag = (...args: unknown[]) => (window as any).dataLayer.push(args);
+  (window as any).gtag = function () { (window as any).dataLayer.push(arguments); };
+  const gtag = (window as any).gtag;
   gtag('consent', 'default', {
     ad_storage: 'denied',
     ad_user_data: 'denied',
     ad_personalization: 'denied',
     analytics_storage: 'denied',
+    wait_for_update: 500,
   });
 
   const loadGtag = () => {
@@ -50,7 +53,7 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
     s.async = true;
     document.head.appendChild(s);
     gtag('js', new Date());
-    gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+    gtag('config', GA_MEASUREMENT_ID);
   };
 
   const setConsent = (value: 'granted' | 'denied') => {
