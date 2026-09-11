@@ -28,6 +28,16 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
   const GA_CONFIGURED = banner.dataset.gaConfigured === 'true';
   const CONSENT_KEY = 'ga_consent';
 
+  // Signaux du mode Consentement (v2) : tout refusé par défaut, avant tout chargement
+  (window as any).dataLayer = (window as any).dataLayer || [];
+  const gtag = (...args: unknown[]) => (window as any).dataLayer.push(args);
+  gtag('consent', 'default', {
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    analytics_storage: 'denied',
+  });
+
   const loadGtag = () => {
     if (!GA_CONFIGURED) {
       console.warn('GA4 : ID de mesure non configuré (remplacer dans src/components/Analytics.astro).');
@@ -37,16 +47,18 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
     s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`;
     s.async = true;
     document.head.appendChild(s);
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).gtag = function () { (window as any).dataLayer.push(arguments); };
-    (window as any).gtag('js', new Date());
-    (window as any).gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
+    gtag('js', new Date());
+    gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true });
   };
 
   const setConsent = (value: 'granted' | 'denied') => {
     try { localStorage.setItem(CONSENT_KEY, value); } catch {}
     banner.hidden = true;
-    if (value === 'granted') loadGtag();
+    if (value === 'granted') {
+      // Seule la mesure d'audience est acceptée : pas de signaux publicitaires
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      loadGtag();
+    }
   };
 
   // Réouverture du bandeau (lien « Gérer mes cookies » du footer)
@@ -57,6 +69,10 @@ const GA_CONFIGURED = /^G-[A-Z0-9]{8,}$/i.test(GA_MEASUREMENT_ID) && (GA_MEASURE
 
   let stored: string | null = null;
   try { stored = localStorage.getItem(CONSENT_KEY); } catch {}
-  if (stored === 'granted') loadGtag();
-  else if (stored !== 'denied') banner.hidden = false;
+  if (stored === 'granted') {
+    gtag('consent', 'update', { analytics_storage: 'granted' });
+    loadGtag();
+  } else if (stored !== 'denied') {
+    banner.hidden = false;
+  }
 </script>
