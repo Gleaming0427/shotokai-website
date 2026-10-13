@@ -14,6 +14,11 @@ const dateLigne = repriseDate
   ? repriseDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }).replace(/^./, (c) => c.toUpperCase())
   : '';
 const heure = reprise?.data.heure || '';
+
+// Dernier événement publié (même tri que la section Événements)
+const events = await getCollection('evenements');
+events.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const dernierEvent = events[0];
 ---
 
 <section class="hero" id="hero">
@@ -24,51 +29,78 @@ const heure = reprise?.data.heure || '';
     <p class="hero-tagline">Accessible à toutes et à tous, aux petits comme aux grands&nbsp;!</p>
     <a href="/#horaires" class="btn">Horaires et tarifs</a>
 
-    {reprise && (
-      <a
-        href="/#evenements"
-        class="hero-event"
-        id="hero-event"
-        data-image=""
-        data-tag={repriseLabel}
-        data-title={reprise.data.title}
-        data-desc={reprise.body || ''}
-      >
-        <span class="hero-event-date" aria-hidden="true">
-          <span class="hero-event-date-day">{jour}</span>
-          <span class="hero-event-date-month">{moisCourt} {annee}</span>
-        </span>
-        <span class="hero-event-body">
-          <span class="hero-event-label">{repriseLabel}</span>
-          <span class="hero-event-title">{heure ? `${dateLigne} • ${heure}` : dateLigne}</span>
-        </span>
-        <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M9 6l6 6-6 6"></path>
-        </svg>
-      </a>
+    {(reprise || dernierEvent) && (
+      <div class="hero-events">
+        {reprise && (
+          <a
+            href="/#evenements"
+            class="hero-event"
+            data-image=""
+            data-tag={repriseLabel}
+            data-title={reprise.data.title}
+            data-desc={reprise.body || ''}
+          >
+            <span class="hero-event-date" aria-hidden="true">
+              <span class="hero-event-date-day">{jour}</span>
+              <span class="hero-event-date-month">{moisCourt} {annee}</span>
+            </span>
+            <span class="hero-event-body">
+              <span class="hero-event-label">{repriseLabel}</span>
+              <span class="hero-event-title">{heure ? `${dateLigne} • ${heure}` : dateLigne}</span>
+            </span>
+            <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 6l6 6-6 6"></path>
+            </svg>
+          </a>
+        )}
+
+        {dernierEvent && (
+          <a
+            href="/#evenements"
+            class="hero-event"
+            data-image={dernierEvent.data.image || ''}
+            data-tag={dernierEvent.data.tag}
+            data-title={dernierEvent.data.title}
+            data-desc={dernierEvent.body || ''}
+          >
+            <span class="hero-event-thumb" aria-hidden="true">
+              {dernierEvent.data.image && <img src={dernierEvent.data.image} alt="" loading="lazy" />}
+            </span>
+            <span class="hero-event-body">
+              <span class="hero-event-label">Dernier événement</span>
+              <span class="hero-event-title">{dernierEvent.data.title}</span>
+            </span>
+            <svg class="hero-event-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 6l6 6-6 6"></path>
+            </svg>
+          </a>
+        )}
+      </div>
     )}
   </div>
 </section>
 
 <script>
-  const heroEvent = document.getElementById('hero-event');
+  const heroEvents = document.querySelectorAll<HTMLElement>('.hero-event');
   const modal = document.getElementById('event-modal');
-  if (heroEvent && modal) {
+  if (heroEvents.length && modal) {
     const emImg = document.getElementById('em-img') as HTMLImageElement;
     const emTag = document.getElementById('em-tag')!;
     const emTitle = document.getElementById('em-title')!;
     const emDesc = document.getElementById('em-desc')!;
 
-    heroEvent.addEventListener('click', (e) => {
-      e.preventDefault();
-      const img = heroEvent.getAttribute('data-image');
-      if (img) { emImg.src = img; emImg.style.display = 'block'; }
-      else { emImg.style.display = 'none'; }
-      emTag.textContent = heroEvent.getAttribute('data-tag') || '';
-      emTitle.textContent = heroEvent.getAttribute('data-title') || '';
-      emDesc.textContent = heroEvent.getAttribute('data-desc') || '';
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    heroEvents.forEach(heroEvent => {
+      heroEvent.addEventListener('click', (e) => {
+        e.preventDefault();
+        const img = heroEvent.getAttribute('data-image');
+        if (img) { emImg.src = img; emImg.style.display = 'block'; }
+        else { emImg.style.display = 'none'; }
+        emTag.textContent = heroEvent.getAttribute('data-tag') || '';
+        emTitle.textContent = heroEvent.getAttribute('data-title') || '';
+        emDesc.textContent = heroEvent.getAttribute('data-desc') || '';
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
     });
   }
 </script>
